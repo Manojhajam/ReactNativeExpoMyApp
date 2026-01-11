@@ -11,7 +11,7 @@ const Index = () => {
   }}>
     <Text className="text-blue-600" style={{ fontSize: 30, fontWeight: "700" }}>Hello Welcome to Coder</Text>
     <Link className="text-sky-600" href={"/about"}>Go to about</Link>
-    <TouchableOpacity onPress={() => router.push("/about")}>
+    <TouchableOpacity onPress={() => router.push("/home")}>
       <Text>Change route</Text>
     </TouchableOpacity>
   </View>;

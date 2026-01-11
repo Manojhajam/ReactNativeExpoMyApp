@@ -1,12 +1,11 @@
 import { Stack } from "expo-router";
-import React from "react";
 import "../global.css";
-import { View } from "react-native-web";
 
 const _layout = () => {
   return (
     <Stack
       screenOptions={{
+        headerShown: false,
         headerStyle: { backgroundColor: "#f4511e" },
         headerTintColor: "#fff",
         headerTitleStyle: {
@@ -15,7 +14,7 @@ const _layout = () => {
       }}
     >
       <Stack.Screen name="index" />
-      <Stack.Screen name="(tabs)"/>
+      <Stack.Screen name="(tabs)" />
     </Stack>
   );
 };
