@@ -1,22 +1,26 @@
+import { BlurView } from "expo-blur";
 import {
-  View,
-  Text,
+  ActivityIndicator,
+  FlatList,
+  Image,
+  ImageBackground,
   Platform,
   ScrollView,
-  ImageBackground,
-  FlatList,
-  ActivityIndicator,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
-import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Image } from "react-native";
 import logo from "../../assets/images/dinetimelogo.png";
-import { BlurView } from "expo-blur";
 import banner from "../../assets/images/homeBanner.png";
 import { restaurants } from "../../store/restaurants";
+// import uploadData from "../../config/bulkupload";
 
-const home = () => {
+const Home = () => {
+  // useEffect(() => {
+
+  //   // uploadData()
+  // })
   const renderItem = ({ item }) => (
     <TouchableOpacity className="bg-[#5f5f5f] max-h-64 max-w-xs flex justify-center rounded-lg p-4 mx-4 ">
       <Image
@@ -26,13 +30,19 @@ const home = () => {
       />
       <Text className="text-white text-lg font-bold mb-2">{item.name}</Text>
       <Text className="text-white text-base mb-2">{item.address}</Text>
-      <Text className="text-white text-base mb-2">Open: {item.opening}- Close: {item.closing}</Text>
+      <Text className="text-white text-base mb-2">
+        Open: {item.opening}- Close: {item.closing}
+      </Text>
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={[{ backgroundColor: "#2b2b2b" },
-    Platform.OS == "android"&& { paddingBottom: 60 }]}>
+    <SafeAreaView
+      style={[
+        { backgroundColor: "#2b2b2b" },
+        Platform.OS == "android" && { paddingBottom: 60 },
+      ]}
+    >
       <View className="flex items-center py-2">
         <View className="bg-[#5f5f5f] w-11/12 rounded-lg shadow-lg justify-center">
           <View className="flex flex-row items-center">
@@ -59,7 +69,9 @@ const home = () => {
         </ImageBackground>
 
         <View className="p-4 bg-[#2b2b2b] flex-row items-center">
-          <Text className="text-3xl text-white mr-2 font-semibold">Special Discounts %</Text>
+          <Text className="text-3xl text-white mr-2 font-semibold">
+            Special Discounts %
+          </Text>
         </View>
 
         {restaurants.length > 0 ? (
@@ -75,7 +87,9 @@ const home = () => {
           <ActivityIndicator animating color={"#fb9b33"} />
         )}
         <View className="p-4 bg-[#2b2b2b] flex-row items-center">
-          <Text className="text-3xl text-[#fb9b33] mr-2 font-semibold">Our Restaurants</Text>
+          <Text className="text-3xl text-[#fb9b33] mr-2 font-semibold">
+            Our Restaurants
+          </Text>
         </View>
 
         {restaurants.length > 0 ? (
@@ -95,4 +109,4 @@ const home = () => {
   );
 };
 
-export default home;
+export default Home;
