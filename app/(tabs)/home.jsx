@@ -16,13 +16,20 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import logo from "../../assets/images/dinetimelogo.png";
 import banner from "../../assets/images/homeBanner.png";
 // import uploadData from "../../config/bulkupload";
+import { useRouter } from "expo-router";
 import { db } from "../../config/firebaseConfig";
 
 const Home = () => {
+  const router = useRouter();
   const [restaurants, setRestaurants] = useState([]);
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity className="bg-[#5f5f5f] max-h-64 max-w-xs flex justify-center rounded-lg p-4 mx-4 ">
+    <TouchableOpacity
+      onPress={() =>
+        router.push(`/restaurant/${encodeURIComponent(item.name)}`)
+      }
+      className="bg-[#5f5f5f] max-h-64 max-w-xs flex justify-center rounded-lg p-4 mx-4 "
+    >
       <Image
         resizeMethod="cover"
         source={{ uri: item.image }}
