@@ -5,6 +5,7 @@ import {
   Dimensions,
   FlatList,
   Image,
+  Linking,
   Platform,
   ScrollView,
   Text,
@@ -14,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { db } from "../../config/firebaseConfig";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
+import DatePickerComponent from "../../components/restaurant/DatePickerComponent";
 
 const Restaurant = () => {
   const { restaurant } = useLocalSearchParams();
@@ -94,13 +96,34 @@ const Restaurant = () => {
           />
         </View>
 
+        <View
+          style={{
+            position: "absolute",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "row",
+            left: "50%",
+            transform: [{ translateX: -50 }],
+            zIndex: 10,
+            bottom: 15,
+          }}
+        >
+          {carousalData[0].images?.map((_, i) => (
+            <View
+              key={i}
+              className={`bg-white h-2 w-2 ${i == currentIndex && "h-3 w-3"} p-1 mx-1 rounded-full`}
+            ></View>
+          ))}
+        </View>
+
         <Image
           source={{ uri: item }}
           style={{
             opacity: 0.5,
             backgroundColor: "black",
-            marginRight: 15,
-            marginLeft: 15,
+            marginRight: 10,
+            marginLeft: 10,
             borderRadius: 25,
           }}
           className="h-64"
@@ -165,6 +188,15 @@ const Restaurant = () => {
     }
   };
 
+  const handleLocation = async () => {
+    const url = "https://maps.app.goo.gl/5sffhGJSdYBTBYga7";
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      console.log("Don't know how to open URL", url);
+    }
+  };
   useEffect(() => {
     getRestaurantData();
   }, []);
@@ -194,6 +226,29 @@ const Restaurant = () => {
             style={{ borderRadius: 25 }}
             showsHorizontalScrollIndicator={false}
           />
+        </View>
+
+        <View className="flex-1 flex-row mt-2 p-2">
+          <Ionicons name="location-sharp" size={24} color="#f49b33" />
+          <Text className="max-w-[75%] text-white">
+            {restaurantData?.address}|{"  "}
+            <Text
+              onPress={handleLocation}
+              className="underline flex items-center justify-center mt-1 text-[#f49b33] italic font-semibold "
+            >
+              Get Direction
+            </Text>
+          </Text>
+        </View>
+        <View className="flex-1 flex-row p-2">
+          <Ionicons name="time" size={20} color="#f49b33" />
+          <Text className="max-w-[75%] mx-2 text-white">
+            {restaurantData?.opening} - {restaurantData?.closing}
+          </Text>
+        </View>
+
+        <View>
+          <DatePickerComponent />
         </View>
       </ScrollView>
     </SafeAreaView>
