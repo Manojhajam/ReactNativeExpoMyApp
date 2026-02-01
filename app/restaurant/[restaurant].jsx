@@ -16,6 +16,7 @@ import { db } from "../../config/firebaseConfig";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 import DatePickerComponent from "../../components/restaurant/DatePickerComponent";
+import GuestPickerComponent from "../../components/restaurant/GuestPickerComponent";
 
 const Restaurant = () => {
   const { restaurant } = useLocalSearchParams();
@@ -25,8 +26,11 @@ const Restaurant = () => {
   const [restaurantData, setRestaurantData] = useState({});
   const [carousalData, setCarousalData] = useState({});
   const [slotsData, setSlotsData] = useState({});
+  const [selectedNumber, setSelectedNumber] = useState(2);
 
   const [currentIndex, setCurrentindex] = useState(0);
+
+  const [date, setDate] = useState(new Date());
 
   const handleNextImage = () => {
     const carousalLength = carousalData[0]?.images.length;
@@ -228,7 +232,7 @@ const Restaurant = () => {
           />
         </View>
 
-        <View className="flex-1 flex-row mt-2 p-2">
+        <View className="flex-1 flex-row mt-2 p-1">
           <Ionicons name="location-sharp" size={24} color="#f49b33" />
           <Text className="max-w-[75%] text-white">
             {restaurantData?.address}|{"  "}
@@ -247,8 +251,29 @@ const Restaurant = () => {
           </Text>
         </View>
 
-        <View>
-          <DatePickerComponent />
+        <View className="flex-1 border m-2 p-2 border-[#f49b33] rounded-lg">
+          <View className="flex-1 flex-row m-2 p-2 justify-end items-center">
+            <View className="flex-1 flex-row">
+              <Ionicons name="calendar" size={20} color={"#f49b33"} />
+              <Text className="text-white mx-2 text-base">
+                Select booking date
+              </Text>
+            </View>
+            <DatePickerComponent date={date} setDate={setDate} />
+          </View>
+
+          <View className="flex-1 flex-row m-2 p-2 justify-end bg-[#474747]  rounded-lg items-center">
+            <View className="flex-1 flex-row">
+              <Ionicons name="people" size={20} color={"#f49b33"} />
+              <Text className="text-white mx-2 text-base">
+                Select number of guests
+              </Text>
+            </View>
+            <GuestPickerComponent
+              selectedNumber={selectedNumber}
+              setSelectedNumber={setSelectedNumber}
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

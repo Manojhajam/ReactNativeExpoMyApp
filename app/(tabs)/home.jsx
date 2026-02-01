@@ -43,7 +43,7 @@ const Home = () => {
     </TouchableOpacity>
   );
 
-  const getRestaurants = async () => {
+  const getRestaurants = async ({ date, setDate }) => {
     const q = query(collection(db, "restaurants"));
     const res = await getDocs(q);
     res.forEach((item) => {
