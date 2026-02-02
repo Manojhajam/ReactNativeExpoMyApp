@@ -16,6 +16,7 @@ import { db } from "../../config/firebaseConfig";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 import DatePickerComponent from "../../components/restaurant/DatePickerComponent";
+import FindSlots from "../../components/restaurant/FindSlots";
 import GuestPickerComponent from "../../components/restaurant/GuestPickerComponent";
 
 const Restaurant = () => {
@@ -26,11 +27,12 @@ const Restaurant = () => {
   const [restaurantData, setRestaurantData] = useState({});
   const [carousalData, setCarousalData] = useState({});
   const [slotsData, setSlotsData] = useState({});
-  const [selectedNumber, setSelectedNumber] = useState(2);
 
   const [currentIndex, setCurrentindex] = useState(0);
-
   const [date, setDate] = useState(new Date());
+
+  const [selectedNumber, setSelectedNumber] = useState(2);
+  const [selectedSlot, setSelectedSlot] = useState(null);
 
   const handleNextImage = () => {
     const carousalLength = carousalData[0]?.images.length;
@@ -185,7 +187,7 @@ const Restaurant = () => {
         slotsSnapshot.forEach((slotDoc) => {
           slots.push(slotDoc.data());
         });
-        setSlotsData(slots);
+        setSlotsData(slots[0]?.slot);
       }
     } catch (error) {
       console.log("Error fetching data", error);
@@ -204,7 +206,7 @@ const Restaurant = () => {
   useEffect(() => {
     getRestaurantData();
   }, []);
-  console.log(restaurantData, carousalData, slotsData);
+  // console.log(restaurantData, carousalData, slotsData);
 
   return (
     <SafeAreaView
@@ -274,6 +276,15 @@ const Restaurant = () => {
               setSelectedNumber={setSelectedNumber}
             />
           </View>
+        </View>
+        <View className="flex-1">
+          <FindSlots
+            date={date}
+            selectedNumber={selectedNumber}
+            slots={slotsData}
+            selectedSlot={selectedSlot}
+            setSelectedSlot={setSelectedSlot}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
