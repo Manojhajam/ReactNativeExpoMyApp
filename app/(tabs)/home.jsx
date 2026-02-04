@@ -23,6 +23,13 @@ const Home = () => {
   const router = useRouter();
   const [restaurants, setRestaurants] = useState([]);
 
+  /** This is like a localStorage **/
+
+  // const temp = async () => {
+  //   const value = await AsyncStorage.getItem("userEmail");
+  //   console.log(value);
+  // };
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() =>

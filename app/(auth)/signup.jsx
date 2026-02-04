@@ -1,6 +1,10 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { Formik } from "formik";
 import {
+  Alert,
   Image,
   ScrollView,
   StatusBar,
@@ -14,9 +18,41 @@ import logo from "../../assets/images/dinetimelogo.png";
 import entryImg from "../../assets/images/Frame.png";
 import validationSchema from "../../utils/authSchema.js";
 
-const signup = () => {
+const Signup = () => {
   const router = useRouter();
-  const handleSignup = () => {};
+  const auth = getAuth();
+  const db = getFirestore();
+
+  const handleSignup = async (values) => {
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password,
+      );
+
+      const user = userCredentials.user;
+      await setDoc(doc(db, "users", user.uid), {
+        email: values.email,
+        createdAt: new Date(),
+      });
+      await AsyncStorage.setItem("userEmail", values.email);
+      router.push("/home");
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        Alert.alert(
+          "Signup Failed!",
+          "This email address is already in use. Pleaase use a different email.",
+        );
+      } else {
+        Alert.alert(
+          "Signup Failed!",
+          "An unexpected eror occurred. Please try again later.",
+        );
+      }
+    }
+  };
+
   return (
     <SafeAreaView className="bg-[#2b2b2b]">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
@@ -126,4 +162,4 @@ const signup = () => {
   );
 };
 
-export default signup;
+export default Signup;
