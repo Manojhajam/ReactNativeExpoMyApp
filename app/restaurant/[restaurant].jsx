@@ -284,6 +284,7 @@ const Restaurant = () => {
             slots={slotsData}
             selectedSlot={selectedSlot}
             setSelectedSlot={setSelectedSlot}
+            restaurant={restaurant}
           />
         </View>
       </ScrollView>
