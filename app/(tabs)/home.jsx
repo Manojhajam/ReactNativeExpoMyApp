@@ -27,6 +27,7 @@ const Home = () => {
 
   // const temp = async () => {
   //   const value = await AsyncStorage.getItem("userEmail");
+  //   const value = await AsyncStorage.getItem("isGuest");
   //   console.log(value);
   // };
 

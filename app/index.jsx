@@ -1,12 +1,23 @@
-import { Image, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { useRouter } from "expo-router";
+import {
+  Image,
+  ScrollView,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import logo from "../assets/images/dinetimelogo.png";
-import entryImg from "../assets/images/Frame.png"
-import { useRouter } from "expo-router";
-
+import entryImg from "../assets/images/Frame.png";
 
 const Index = () => {
   const router = useRouter();
+  const handleGuest = async () => {
+    await AsyncStorage.setItem("isGuest", "true");
+    router.push("/home");
+  };
+
   return (
     <SafeAreaView className="bg-[#2b2b2b]">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
@@ -21,7 +32,7 @@ const Index = () => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => router.push("/home")}
+              onPress={handleGuest}
               className="p-2 my-2 bg-[#2b2b2b] border border-[#f49b33] rounded-lg max-w-fit"
             >
               <Text className="text-xl text-[#f49b33] font-semibold text-center">
@@ -47,7 +58,11 @@ const Index = () => {
           </View>
         </View>
         <View className="flex-1">
-<Image source={entryImg} className="w-full h-full" resizeMode="contain"/>
+          <Image
+            source={entryImg}
+            className="w-full h-full"
+            resizeMode="contain"
+          />
         </View>
         <StatusBar barStyle={"light-content"} backgroundColor={"#2b2b2b"} />
       </ScrollView>

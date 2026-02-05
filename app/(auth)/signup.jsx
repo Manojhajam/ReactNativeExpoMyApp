@@ -23,6 +23,11 @@ const Signup = () => {
   const auth = getAuth();
   const db = getFirestore();
 
+  const handleGuest = async () => {
+    await AsyncStorage.setItem("isGuest", "true");
+    router.push("/home");
+  };
+
   const handleSignup = async (values) => {
     try {
       const userCredentials = await createUserWithEmailAndPassword(
@@ -139,7 +144,7 @@ const Signup = () => {
             <TouchableOpacity
               className="flex flex-row items-center justify-center mt-10"
               style={{ marginTop: 12 }}
-              onPress={() => router.push("/home")}
+              onPress={handleGuest}
             >
               <Text className="text-white font-semibold">Be a </Text>
               <Text className="text-base font-semibold underline text-[#f49b33]">
