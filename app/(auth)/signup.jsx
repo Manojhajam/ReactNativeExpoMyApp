@@ -47,6 +47,7 @@ const Signup = () => {
         createdAt: new Date(),
       });
       await AsyncStorage.setItem("userEmail", values.email);
+      await AsyncStorage.setItem("isGuest", "false");
       router.push("/home");
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
