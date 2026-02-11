@@ -1,5 +1,7 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import {
+  Alert,
   Image,
   ScrollView,
   StatusBar,
@@ -14,6 +16,11 @@ import entryImg from "../assets/images/Frame.png";
 const Index = () => {
   const router = useRouter();
   const handleGuest = async () => {
+    const token = await AsyncStorage.getItem("userEmail");
+    if (token) {
+      Alert.alert("Already Logged In", "You are already logged in.");
+      return;
+    }
     await AsyncStorage.setItem("isGuest", "true");
     router.push("/home");
   };

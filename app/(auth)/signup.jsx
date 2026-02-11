@@ -24,8 +24,13 @@ const Signup = () => {
   const db = getFirestore();
 
   const handleGuest = async () => {
-    await AsyncStorage.setItem("isGuest", "true");
-    router.push("/home");
+    const token = await AsyncStorage.getItem("userEmail");
+    if (token) {
+      Alert.alert("Already Logged In", "You are already logged in.");
+    } else {
+      await AsyncStorage.setItem("isGuest", "true");
+      router.push("/home");
+    }
   };
 
   const handleSignup = async (values) => {

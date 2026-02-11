@@ -56,7 +56,7 @@ const profile = () => {
             style={{ marginTop: 30 }}
             className="p-2 bg-[#f49b33] text-black rounded-lg "
           >
-            <Text className="text-xl font-semibold text-center">Log out</Text>
+            <Text className="text-xl font-semibold text-center">Sign Up</Text>
           </TouchableOpacity>
         </>
       )}
