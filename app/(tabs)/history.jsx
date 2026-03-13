@@ -65,7 +65,7 @@ const history = () => {
       {userEmail ? (
         <FlatList
           data={bookings}
-          onRefresh={fetchBookings}
+          onRefresh={fetchBookings}   //Pull Refresh
           refreshing={loading}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
